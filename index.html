@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>For Lauren</title>
+</head>
+
+<body>
+
+  <div class="SVGview" style="position: absolute;
+left: 50%; top: 40%;">
+    <svg height="100" width="100">
+      <circle id="indicator" cx="50" cy="50" r="20" stroke="black" stroke-width="3" fill="green" /> Sorry, your browser does not support inline SVG.
+    </svg>
+  </div>
+  <div class="textView" style="position: absolute; left:45%; top:50%">
+    <div id="first">Mark still very much loves, cherishes and misses you</div>
+    <div id="last"><b>Last online: </b></div>
+  </div>
+
+  <script type="application/javascript">
+    var today = new Date();
+    var fiveDaysPrior = today.getDate() - 5;
+    var month = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+
+    if (fiveDaysPrior < 10) {
+      fiveDaysPrior = '0' + fiveDaysPrior
+    }
+
+    if (month < 10) {
+      month = '0' + month
+    }
+
+    today = month + '/' + fiveDaysPrior + '/' + yyyy;
+
+
+    function readDateFile(file, callback) {
+      var rawFile = new XMLHttpRequest();
+      rawFile.overrideMimeType("application/json");
+      rawFile.open("GET", file, true);
+      rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+          callback(rawFile.responseText);
+        }
+      }
+      rawFile.send(null);
+    }
+
+    readDateFile("./date.json", function (text) {
+      var data = JSON.parse(text);
+      last.innerHTML += data.date;
+
+      if (fiveDaysPrior == data.date.substr(3,2) || today.substr(0,2) != data.date.substr(0,2)) {
+        indicator.style.fill = "red";
+        first.innerHTML = "Looks like Mark hasn't been online for a while. \
+                          </p> I'm sure everything is still alright and he very much loves, \
+                          </br> cherishes and misses you.";
+      }
+    });
+  </script>
+
+</body>
+
+</html>
