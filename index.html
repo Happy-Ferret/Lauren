@@ -51,7 +51,9 @@ left: 50%; top: 40%;">
       var data = JSON.parse(text);
       last.innerHTML += data.date;
 
-      if (fiveDaysPrior == data.date.substr(3,2) || today.substr(0,2) != data.date.substr(0,2)) {
+      if (fiveDaysPrior == data.date.substr(3,2) || 
+          today.substr(0,2) != data.date.substr(0,2) ||
+          yyyy != data.date.substr(6,4)) {
         indicator.style.fill = "red";
         first.innerHTML = "Looks like Mark hasn't been online for a while. \
                           </p> I'm sure everything is still alright and he very much loves, \
